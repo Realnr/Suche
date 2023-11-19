@@ -4,12 +4,13 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         int[] zahlenArray;
-        zahlenArray = new int[4];
+        zahlenArray = new int[5];
         fillIntArray(zahlenArray);
 
+        zahlenArray[0] = 0;
         Arrays.sort(zahlenArray);
         printArray(zahlenArray);
-        System.out.println(" index:" + binäreSuche(zahlenArray, 4));
+        System.out.println(" index:" + binäreSuche(zahlenArray, 2));
 
     }
     public  static void fillIntArray(int[] array){
@@ -36,23 +37,22 @@ public class Main {
 
         Arrays.sort(array);
 
-        int vergleichcount = 0;
+        double lastIndex = ((double)array.length)-1 ;
 
-        double currentMiddle = array.length/2;
-        double add = array.length/2;
+        int currentMiddle = round(lastIndex/2);
+        double toAdd = currentMiddle;
 
         for (int i = 0; i < findLog2(array.length); i++) {
-            vergleichcount++;
-            if(array[(int)currentMiddle] == gesuchteZahl) {
-                System.out.println(vergleichcount);
-                return (int)currentMiddle;
+
+            if(array[currentMiddle] == gesuchteZahl) {
+                return currentMiddle;
             }
 
-            add/=2;
-            if(gesuchteZahl > array[(int)currentMiddle]){
-                currentMiddle += add;
-            }else if(gesuchteZahl < array[(int)currentMiddle]){
-                currentMiddle -= add;
+           toAdd/=2;
+            if(gesuchteZahl > array[currentMiddle]){
+                currentMiddle += round(toAdd);
+            }else if(gesuchteZahl < array[currentMiddle]){
+                currentMiddle -= round(toAdd);
             }
 
         }
@@ -69,6 +69,13 @@ public class Main {
             count++;
         }
         return count;
+    }
+    public static int round(double number){
+        boolean rundeHoch = number-0.5 >= (int)number;
+        if(rundeHoch){
+            return ((int)number)+1;
+        }
+        return (int)number;
     }
 
 
